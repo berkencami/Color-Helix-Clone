@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour {
     {
         instance = this;
         GenerateColors();
-        PlayerPrefs.GetInt("Level", 1);
+        PlayerPrefs.SetInt("Level",1);
     }
 	
 	void Start () {

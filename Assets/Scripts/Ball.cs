@@ -11,7 +11,7 @@ public class Ball : MonoBehaviour {
     private MeshRenderer meshRenderer;
     private SpriteRenderer splash;
 
-    private float height = 0.58f, speed = 6;
+    private float height = 0.58f, speed = 2;
     private float lerpAmount;
 
     private bool move, isRising, gameOver, displayed;
