@@ -1,5 +1,6 @@
-# Color-Helix-Clone
+# Color Helix
 Color Helix Clone 
+https://berkencami.itch.io/colorhelix
 
 
 
