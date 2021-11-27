@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour {
 
+    public static Ball Instance;
     private static float z;
 
     private static Color currentColor;
@@ -17,13 +18,14 @@ public class Ball : MonoBehaviour {
     private bool move, isRising, gameOver, displayed;
     public bool perfectStar;
 
-    private AudioSource failSound, hitSound, levelCompleteSound;
+    [SerializeField] AudioClip failSound, hitSound, levelCompleteSound;
+
+    public ParticleSystem confeti;
+    
 
     void Awake()
-    {
-        failSound = GameObject.Find("FailSound").GetComponent<AudioSource>();
-        hitSound = GameObject.Find("HitSound").GetComponent<AudioSource>();
-        levelCompleteSound = GameObject.Find("LevelCompleteSound").GetComponent<AudioSource>();
+    {   
+        Instance=this;
         meshRenderer = GetComponent<MeshRenderer>();
         splash = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
@@ -93,7 +95,7 @@ public class Ball : MonoBehaviour {
                 GameObject pointDisplay = Instantiate(Resources.Load("PointDisplay"), transform.position, Quaternion.identity) as GameObject;
                 pointDisplay.GetComponent<PointDisplay>().SetText("+" + PlayerPrefs.GetInt("Level"));
             }
-            hitSound.Play();
+            SoundManager.Instance.PlaySound(hitSound,1);
             Destroy(target.transform.parent.gameObject);
         }
 
@@ -110,6 +112,7 @@ public class Ball : MonoBehaviour {
 
         if (target.CompareTag("FinishLine"))
         {
+            confeti.Play();
             StartCoroutine(PlayNewLevel());
         }
 
@@ -121,7 +124,7 @@ public class Ball : MonoBehaviour {
 
     IEnumerator PlayNewLevel()
     {
-        levelCompleteSound.Play();
+       SoundManager.Instance.PlaySound(levelCompleteSound,1);
         Camera.main.GetComponent<CameraFollow>().enabled = false;
         yield return new WaitForSeconds(1.5f);
         move = false;
@@ -134,7 +137,7 @@ public class Ball : MonoBehaviour {
 
     IEnumerator GameOver()
     {
-        failSound.Play();
+        SoundManager.Instance.PlaySound(failSound,1);
         gameOver = true;
         splash.color = currentColor;
         splash.transform.position = new Vector3(0, 0.7f, Ball.z - 0.05f);

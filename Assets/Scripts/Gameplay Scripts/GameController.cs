@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour {
 
     public void GenerateLevel()
     {
+        Ball.Instance.confeti.Stop();
         GenerateColors();
 
         if (PlayerPrefs.GetInt("Level") >= 1 && PlayerPrefs.GetInt("Level") <= 4)
